@@ -1,7 +1,14 @@
 # Dockerfile for FastAPI application
 
 # Use a slim Python image as base
-FROM python:3.9-slim-buster
+FROM python:3.14.2-slim-bookworm
+
+# Install system dependencies required by psycopg2
+# libpq-dev provides the PostgreSQL client libraries
+# gcc is needed for compilation if not using the binary version
+RUN apt-get update && apt-get install -y libpq-dev gcc \
+    && rm -rf /var/lib/apt/lists/*
+
 
 # Set the working directory in the container
 WORKDIR /app
